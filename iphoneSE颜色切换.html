@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title></title>
+		<style type="text/css">
+			html{
+				font-size: 43px;
+				
+				--iphone-black-bg: #000;
+				--iphone-black-text: #f2f2f2;
+				  
+				--iphone-white-bg: #fff;
+				--iphone-white-text: #8b8b99;
+				--iphone-white-text-highlight: #1d1d1f;
+				  
+				--iphone-red-bg: #960b19;
+				--iphone-red-text: #e57571;
+				--iphone-red-text-highlight: #f5f5f7;
+				  
+				--iphone-width: 460px;
+				--iphone-offscreen: -720px;
+			}
+			body{
+				margin: 0;
+				height: 4000px;
+			}
+			.sticky-container{
+				position: sticky;
+				top: 0;
+				width: 100%;
+				height: 100vh;
+				overflow: hidden;
+			}
+			.sticky-container .iphone{
+				width: 100%;
+				height: 100vh;
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				align-items: center;
+				position: absolute;
+			}
+			.sticky-container .iphone h3{
+				margin: 0;
+				width: var(--iphone-width);
+			}
+			.sticky-container .iphone img{
+				width: var(--iphone-width);
+				margin-bottom: var(--iphone-offscreen);
+			}
+			.sticky-container .iphone.black{
+				z-index: 10;
+				background-color: var(--iphone-black-bg);
+				color: var(--iphone-black-text);
+			}
+			.sticky-container .iphone.white{
+				z-index: 20;
+				background-color: var(--iphone-white-bg);
+				color: var(--iphone-white-text);
+				clip-path: inset(100% 0 0 0);
+			}
+			.sticky-container .iphone.white span{
+				color: var(--iphone-white-text-highlight);
+			}
+			.sticky-container .iphone.red{
+				z-index: 30;
+				background-color: var(--iphone-red-bg);
+				color: var(--iphone-red-text);
+				clip-path: inset(100% 0 0 0);
+			}
+			.sticky-container .iphone.red span{
+				color: var(--iphone-red-text-highlight);
+			}
+			
+			.sticky-container.no-sticky{
+				position: relative;
+				overflow: visible;
+			}
+			.sticky-container.no-sticky .iphone{
+				position: relative;
+			}
+			.sticky-container.no-sticky .iphone.red{
+				padding-bottom: calc(var(--iphone-offscreen) * -1);
+			}
+			
+		</style>
+	</head>
+	<body>
+		<div class="sticky-container">
+			<div class="iphone black">
+				<h3>comes in black<br />
+				&nbsp;
+				</h3>
+				<img src="../image/iphoneSE_black.png" >
+			</div>
+			<div class="iphone white">
+				<h3>comes in black<br>
+					<span>white</span>
+				</h3>
+				<img src="../image/iphoneSE_white.png" >
+			</div>
+			<div class="iphone red">
+				<h3>comes in black<br>
+				white <span>And power</span>
+				</h3>
+				<img src="../image/iphoneSE_red.png" >
+			</div>
+		</div>
+		
+		<script type="text/javascript">
+			var $black = document.querySelector(".iphone.black"),
+				$white = document.querySelector(".iphone.white"),
+				$red = document.querySelector(".iphone.red"),
+				noStickyHeight = document.documentElement.clientHeight * 2;
+			window.addEventListener("scroll", (e) => {
+				let scrolled = document.documentElement.scrollTop / noStickyHeight;
+				
+				$white.style.clipPath = `inset(${((0.5 - scrolled) / 0.5) * 100}% 0 0 0)`;
+				$red.style.clipPath = `inset(${((1 - scrolled) / 0.5) * 100}% 0 0 0)`;
+				
+				console.log(scrolled);
+				
+				if(scrolled >= 1){
+					document.querySelector(".sticky-container").classList.add("no-sticky");
+				}else{
+					document.querySelector(".sticky-container").classList.remove("no-sticky");
+				}
+			})
+		</script>
+	</body>
+</html>
